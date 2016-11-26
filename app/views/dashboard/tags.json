@@ -1,0 +1,75 @@
+[
+  {
+    "key": "Answer 1",
+    "tag": "Tag 1",
+    "question": "Question1",
+    "value": 1
+  },
+
+   {
+    "key": "Answer 2",
+    "tag": "Tag 2",
+    "question": "Question 2",
+    "value": 1
+  },
+  {
+    "key": "Answer 3",
+    "tag": "Tag 2",
+    "question": "Question 3",
+    "value": 1
+  },
+  {
+    "key": "Answer 4",
+    "tag": "Tag 2",
+    "question": "Question 4",
+    "value": 1
+  },
+  {
+    "key": "Answer 5",
+    "tag": "Tag 2",
+    "question": "Question 5",
+    "value": 1
+  },
+  {
+    "key": "Answer 6",
+    "tag": "Tag 2",
+    "question": "Question 6",
+    "value": 1
+  },
+  {
+    "key": "Answer 2",
+    "tag": "Tag 4",
+    "question": "Question 2",
+    "value": 1
+  },
+  {
+    "key": "Answer 5",
+    "tag": "Tag 5",
+    "question": "Question 5",
+    "value": 1
+  },
+  {
+    "key": "Answer 3",
+    "tag": "Tag 3",
+    "question": "Question 3",
+    "value": 1
+  },
+    {
+    "key": "Answer 4",
+    "tag": "Tag 4",
+    "question": "Question 4",
+    "value": 1
+  },
+    {
+    "key": "Answer 5",
+    "tag": "Tag 5",
+    "question": "Question 5",
+    "value": 1
+  },
+    {
+    "key": "Answer 2",
+    "tag": "Tag 1",
+    "question": "Question 6",
+    "value": 1
+  }
+]

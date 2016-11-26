@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Stackoverflow</title>
+   
+    <%= render 'layouts/head' %>
+    <%= yield :styles %>
+
+  </head>
+
+ 	 <body>
+  		<%= yield %>
+		<%=render 'layouts/scripts'%>
+		
+		<%= yield :js_scripts %>
+  </body>
+</html>
