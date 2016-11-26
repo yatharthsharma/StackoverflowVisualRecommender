@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # README
 
 This README would normally document whatever steps are necessary to get the
@@ -22,3 +23,7 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+=======
+# StackoverflowVisualRecommender
+Stackoverflow Visual Recommender
+>>>>>>> 919e43b1790bfb3eec7ab86ec149f3be5276d6cc
