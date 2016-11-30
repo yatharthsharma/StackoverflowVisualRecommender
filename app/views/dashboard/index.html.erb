@@ -1,84 +1,270 @@
 <% content_for :styles do %>
 	<%= stylesheet_link_tag 'dashboard', media: 'all', 'data-turbolinks-track' => true %>
+	  <link rel="stylesheet" href="http://codemirror.net/lib/codemirror.css">
 <% end %>
 
 
-<body class="hold-transition skin-black">
+<body class="hold-transition skin-blue">
 	<div class="wrapper">
-		<header class="main-header">
-			<!-- header things -->
-			placeholder for logo and stuff
-			
-		</header>
 		<div >
-			<section class="content-header">
-			      <h1>
-			        Dashboard
-			        <small>: Let Visualize things!</small>
+			<section class="content-header ">
+			      <h1 style="color:white;text-align:center;font-size:50px">
+			      	  Intuitive Code Editor
+			        <small style="font-size:20px">: A visual code recommender</small>
 			      </h1>
-			      <ol class="breadcrumb">
-			        <li class="active" ><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-			        
-			      </ol>
+			      <hr>
+			   <!--    <ol class="breadcrumb">
+			        <li class="active" ><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>		        
+			      </ol> -->
     		</section>
-    		 <section class="content">
-	    	    <div class="row" >
-	    		 	<div id="sunburst" class="sunburst col-sm-5" style="float:left">
-					
+    		<section class="content">
+    			<div class="row">
+    				<div id="sunburst-slider" class="col-sm-4">
+						<label class="label_name" id= "sunburst-slider-label-name" style="color:#feb24c">	No of elements   </label>
+						<label class="label_slider" id= "sunburst-slider-label"> </label> <br>
+							  <input type="range" id="slide-sunburst-slider" name="myRange" min="50" max="200" value="0">
 					</div>
-	    		 	<div class="col-sm-2">
+					<div id="sunburst-slider" class="col-sm-offset-4 col-sm-4">
+						<label class="label_name" id= "sunburst-slider-label-name" style="color:#feb24c">	No of Upvotes  </label>
+						<label class="label_slider" id= "sunburst-slider-label"> </label> <br>
+							  <input type="range" id="slide-sunburst-slider" name="myRange" min="50" max="200" value="0">
+					</div>
+    			</div>
+    			<br />
+    			<div class = "row">
+    				<div id="sequence" >
+					</div>
+
+    			</div>
+	    		<div class="row">
+	    			<div class="col-sm-6">
+		    			<!-- <div class="box box-warning"> -->
+			    		 	<div id="sunburst" style="float:left">
+			    		 		<div id="explanation" style="visibility: hidden;float:left">
+							      	<span id="percentage"></span>
+							      of the code comes in this sequence
+								</div>
+							</div>
+						<!-- </div> -->
+					</div>
+			            <!-- <div class="box box-warning">
+			            </div> -->
+			        <div class="col-sm-6">
+				            	<div id="chart"></div>
+			        </div>
+	    		</div>
+	    		<br />
+	    		<br />
+	    		<div class="row">
+		    		<div id="sidebar" class="col-sm-3">
+					      <input type="checkbox" id="togglelegend"> Legend<br/>
+					      <div id="legend" style="visibility: hidden;"></div>
+					</div>
+	    			<div class="col-sm-6">
 	    		 		<div class="box box-warning">
 	    		 			<div class="box-header with-border">
 	 				            <div class="form-group">
-					                <label>Textarea</label>
-	 				            	
-					                	<textarea class="form-control prettyprint" id="editor" rows="25" placeholder="Enter ..."></textarea>
+					                <label>Your Editor</label>	            	
+					                <textarea class="form-control prettyprint" id="editor" rows="7" placeholder="Enter ..."></textarea>
 					            </div>
 	    		 			</div>
 	    		 		</div>
 	    		 	</div>
-			        <div class="col-sm-5">
-			          <div class="box box-warning">
-			            <div class="box-header with-border">
-			              <h3 class="box-title">Display window</h3>
-
-			              <div class="box-tools pull-right">
-			                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-			                </button>
-			              </div>
-			              <!-- /.box-tools -->
-			            </div>
-			            <!-- /.box-header -->
-			            <div class="box-body" style="height:100-px">
-			              Visualization
-			            	<div id="chart"></div>
-			             	 </div>
-			            </div>
-			          </div>
-			        </div>	
 	    		</div>
-    		 </section>
+    		</section>
 		</div>
 	</div>
+
+
 </body>
+
+
 
 <script src="//d3js.org/d3.v3.min.js"></script>
 
 
 <script type="text/javascript">
+// window.onload = function () {
+  
+ 
+//     // var editableCodeMirror = CodeMirror.fromTextArea(document.getElementById('editor'), {
+//     //     mode: "text/x-java",
+//     //     theme: "default",
+//     //     lineNumbers: true
+//     // });
 
+// 	alert(document.getElementById("editor").value); 
+
+
+// };
+
+	col = {
+			"root_head" : "#FFF",
+			"abstract" : "#1f77b4",
+			"continue" : "#1f77b4",
+			"for" : "#1f77b4",
+			"new" : "#1f77b4",
+			"switch" : "#1f77b4",
+			"assert" : "#1f77b4",
+			"default" : "#1f77b4",
+			"goto" : "#1f77b4",
+			"package" : "#1f77b4",
+			"synchronized" : "#1f77b4",
+			"do" : "#1f77b4",
+			"if" : "#1f77b4",
+			"private" : "#1f77b4",
+			"this" : "#1f77b4",
+			"break" : "#1f77b4",
+			"double" : "#1f77b4",
+			"implements" : "#1f77b4",
+			"protected" : "#1f77b4",
+			"throw" : "#1f77b4",
+			"byte" : "#1f77b4",
+			"else" : "#1f77b4",
+			"import" : "#1f77b4",
+			"public" : "#1f77b4",
+			"throws" : "#1f77b4",
+			"case" : "#1f77b4",
+			"enum" : "#1f77b4",
+			"instanceof" : "#1f77b4",
+			"return" : "#1f77b4",
+			"transient" : "#1f77b4",
+			"catch" : "#1f77b4",
+			"extends" : "#1f77b4",
+			"try" : "#1f77b4",
+			"final" : "#1f77b4",
+			"interface" : "#1f77b4",
+			"static" : "#1f77b4",
+			"class" : "#1f77b4",
+			"finally" : "#1f77b4",
+			"long" : "#1f77b4",
+			"strictfp" : "#1f77b4",
+			"volatile" : "#1f77b4",
+			"const" : "#1f77b4",
+			"native" : "#1f77b4",
+			"super" : "#1f77b4",
+			"while" : "#5687d",
+			"{" : "#6ab975",
+			"}" : "#6ab975",
+			"(" : "#6ab975",
+			")" : "#6ab975",
+			"[" : "#6ab975",
+			"]" : "#6ab975",
+			"·" : "#6ab975",
+			"++" : "#6ab975",
+			"--" : "#6ab975",
+			"++" : "#6ab975",
+			"--" : "#6ab975",
+			"+" : "#6ab975",
+			"-" : "#6ab975",
+			"!" : "#6ab975",
+			"~" : "#6ab975",
+			"* " : "#6ab975",
+			"/ " : "#6ab975",
+			"%" : "#6ab975",
+			"+" : "#6ab975",
+			"-" : "#6ab975",
+			"<<" : "#6ab975",
+			">>" : "#6ab975",
+			">>>" : "#6ab975",
+			"<" : "#6ab975",
+			"<=" : "#6ab975",
+			">" : "#6ab975",
+			">=" : "#6ab975",
+			"instanceof" : "#6ab975",
+			"==" : "#6ab975",
+			"!=" : "#6ab975",
+			"&" : "#6ab975",
+			"^" : "#6ab975",
+			"|" : "#6ab975",
+			"&&" : "#6ab975",
+			"||" : "#6ab975",
+			"? :" : "#6ab975",
+			"=" : "#6ab975",
+			"+=" : "#6ab975",
+			"-=" : "#6ab975",
+			"*=" : "#6ab975",
+			"/=" : "#6ab975",
+			"%=" : "#6ab975",
+
+			"boolean" : "#53a02c",
+			"int" : "#53a02c",
+			"short" : "#53a02c",
+			"char" : "#53a02c",
+			"void" : "#53a02c",
+			"float" : "#53a02c",
+			"string" : "#53a02c",
+	}
+
+	var col_list = ["int", "string", "float", "boolean","short", "char","void",
+			"{",
+			"}",
+			"(",
+			")",
+			"[",
+			"]",
+			"·",
+			"++",
+			"--",
+			"++",
+			"--",
+			"+",
+			"-",
+			"!",
+			"~",
+			"* ",
+			"/ ",
+			"%",
+			"+",
+			"-",
+			"<<",
+			">>",
+			">>>",
+			"<",
+			"<=",
+			">",
+			">=",
+			"instanceof",
+			"==",
+			"!=",
+			"&",
+			"^",
+			"|",
+			"&&",
+			"||",
+			"? :",
+			"=",
+			"+=",
+			"-=",
+			"*=",
+			"/=",
+			"%="]
+	    var colors = {
+		 "Keyword" :"#1f77b4",
+		   "Data Type" :"#53a02c",
+		  "Function" :"#ff7f0e",
+		  "Operators" :"#6ab975",
+		  "Constants" :"#dbdb8d",
+		  "Variables" :"#a173d1"
+		};
+
+				var b = {
+						 w: 75, h: 30, s: 3, t: 10
+						};
 
 				var width = 900,
 				    height = 700,
 				    radius = (Math.min(width, height) / 3) - 10;
 
-				var formatNumber = d3.format(",d");
-
+			var formatNumber = d3.format(",d");
+				var totalSize = 0; 
 				var x = d3.scale.linear()
 				    .range([0, 2 * Math.PI]);
 
 				var y = d3.scale.sqrt()
 				    .range([0, radius]);
+
+				    var totalSize = 0;
 
 				var color = d3.scale.category20c();
 
@@ -100,21 +286,31 @@
 				    .outerRadius(function(d) { return Math.max(0, y(d.y + d.dy)); });
 
 				var svg = d3.select("#sunburst").append("svg")
-				    .attr("width", width)
+				.attr("width", width)
 				    .attr("height", height)
 				    .style("float","left")
 				  .append("g")
+				  .attr("id","sunburstg")
 				    .attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");
 				    var root_copy;
 
-		$("svg").css({top: -100, left: -150, position:'absolute'});
+					$("svg").css({top: -100, left: -150, position:'absolute'});
+					initializeBreadcrumbTrail();
+				var last_d = 0
 
-		$("#editor").on("keydown", function (e) {
+						d3.select("#slide-sunburst-slider").on("input", function() {
+						d3.selectAll("#sunburst-slider-label").text(this.value);
+						 var slider_val = parseFloat(this.value);
+						  // console.log(val_input);
 
+						  traverse(slider_val)
+						 });  
+
+		
+				$("#editor").on("keydown", function (e) {
 			
 				 if(e.keyCode == 32 || e.keyCode === 13 || e.keyCode==8){
 	        		//your code
-	        		console.log("presse");
 				    var content = $('#editor').val();
 				    // console.log(content);
 				    var lastIndex = content.lastIndexOf(" ");
@@ -123,9 +319,13 @@
 				    words.forEach(function (d){ return d.replace(/\s/g, " ")});
 				    // console.log(words);
 				    var last_three_strings = words.slice(-3);
+				    last_three_strings.forEach(function (d){ return d.replace(/\r?\n|\r/g, "")});
 				    var laststing = content.substring(lastIndex);
 					 
 					// console.log(laststing);
+
+					 drawLegend();
+					  d3.select("#togglelegend").on("click", toggleLegend);
 
 					$.ajax({
 						type: "GET",
@@ -134,32 +334,42 @@
 						url: '/dashboard/fetch_n_gram',
 						dataType: 'json',
 						success: function(data){
+							new_data = {}
+							// var count = 0
+							// data.forEach(function (d){
+							// 	if (count< 10)
+							// 		new_data.add(d);
+							// 	count = count + 1
+							// });
+
+							// console.log(new_data);
 							var check_if_same = start(data);
 
 							// console.log(check_if_same);
 							if(!check_if_same) root_copy = data;
-						}
-						//error function
-					})
-
+						}})
 
 
 			function start(root){			
-
+				
 				// console.log(root)
+
  				
- 				if(root_copy != undefined){
+ 				if(root_copy !== undefined){
 	 					var flag_parent = 0;
 	 					var flag_child = 0;
 	 					//if root  == 3rd last word
-	 					last_three_strings.forEach(function (d){ return d.replace(/\r?\n|\r/g, "")});
+	 					
 
-	 					console.log(last_three_strings);
-	 				if (last_three_strings[0] == root_copy.name	){
+	 					// console.log(last_three_strings);
+	 					var root_head = root_copy.name;
+	 				if (last_three_strings[0] == root_head	){
+	 						// console.log("laststring[0] and root");
 			 				 root_copy.children.forEach(function (d){
 			 				 	if (d.name == last_three_strings[1])
 			 				 	{	
-			 				 		console.log("3rd last matched");
+			 				 		// console.log("laststring[1] and root.children");
+			 				 		// console.log("3rd last matched");
 			 				 		flag_parent = 1;
 			 				 		type (d);
 			 				 		if(last_three_strings.length ==3){
@@ -167,6 +377,7 @@
 				 				 		d.children.forEach(function (d_child){
 				 				 			if (d_child.name == last_three_strings[2])
 				 				 			{
+				 				 				// console.log("laststring[2] and root.children.child");
 				 				 				flag_child =1;
 
 				 				 				type (d_child);
@@ -197,11 +408,13 @@
 			 				 // 	//nothing
 			 				 // }
 	 				}
-	 				else if (last_three_strings[1] == root_copy.name){
+	 				else if (last_three_strings[1] == root_head){
+	 					// console.log("in loop");
 	 					root_copy.children.forEach(function (d){
 	 						if (d.name == last_three_strings[2])
 	 						{
 	 							flag_parent = 1;
+	 							// console.log("founD!!");
 	 							type (d);
 	 							return 1;
 	 						}
@@ -213,42 +426,112 @@
 	 				}
 
  				}
-
-
-
+					 
+				
  				d3.selectAll("path").remove();
 
-				  var sunburst = svg
-				      .selectAll("path")
-				      .data(partition.nodes(root));
+					var sunburst = svg
+					      .selectAll("path")
+					      .data(partition.nodes(root));
 
-				    
-				    sunburst.exit().remove(); 
+					      // console.log('@@@@@@@@@@@@')
+				    // console.log(root.slice(0,10))
+					      // console.log('@@@@@@@@@@@@')
+
+					sunburst.exit().remove(); 
 
 				   sunburst.enter()
 				   	.append("path")
 				      .attr("d", arc)
-				      .style("fill", function(d) { return color((d.children ? d : d.parent).name); })
-				      .attr("stroke","black")
-				      // .attr("stroke-width",2)
+				      // .style("fill", function(d) { return color((d.children ? d : d.parent).name); })
+				      // .attr("fill-rule", "evenodd")
+				       // .attr("display", function(d) { return d.depth ? null : "none"; })
+				      .style("fill", function(d) {
+
+				      		if (d.name.includes('(') || d.name.includes(')')) 
+				      			return "#ff7f0e";
+				      		else if (d.name.includes('1')||d.name.includes('2')||d.name.includes('3')||d.name.includes('0')||d.name.includes('4')||d.name.includes('5')||d.name.includes('6')||d.name.includes('7')||d.name.includes('8')||d.name.includes('9'))
+				      			{	
+				      				// console.log(d.name)
+				      				return "#dbdb8d";}
+				      		// else if (d.parent != undefined && $.inArray((d.parent).name ,col_list) != -1 )
+				      		// 	return "#a173d1";
+				      		else if (d.name.includes('&lt') ||d.name.includes('&gt') || d.name.includes('&nbsp') || d.name.includes('&quot') || d.name.includes('&amp'))
+				      			return "#6ab975";
+				      		else if (col[d.name]!= undefined){
+				      			// if(d.name == "while"){
+				      				// console.log("inside while");
+				      				// console.log(col[d.name])};
+				      				// console.log("out while");
+				      			return col[d.name]; 
+				      		}
+				      		else
+				      			return "#a173d1";
+				      	})
+
+				       // .style("fill-opacity", 0.7)
+				      .attr("stroke","white")
+				      .attr("stroke-width",0.6)
 				      .on("click", click)
 				      .on("mouseover",path_sequence)
 				    .append("title")
 				      .text(function(d) { return d.name + "\n" + formatNumber(d.value); });
-
-
 				      
+				       d3.select("#sunburstg").on("mouseleave", mouseleave);
+				       
 
-				 // d3.selectAll("path")[0].forEach(function (d){
+					type(root);
 
+					totalSize = sunburst.node().__data__.value;
+					function mouseleave(d) {
 
-				 // 	console.log(d);
-				 // });
-				type(root);
+						  // Hide the breadcrumb trail
+						  d3.select("#trail")
+						      .style("visibility", "hidden");
+
+						  // Deactivate all segments during transition.
+						  d3.selectAll("path").on("mouseover", null);
+
+						  // Transition each segment to full opacity and then reactivate it.
+						  d3.selectAll("path")
+						      .transition()
+						      .duration(500)
+						      .style("opacity", 1)
+						      .each("end", function() {
+						              d3.select(this).on("mouseover", path_sequence);
+						            });
+						      d3.select("#explanation")
+     						 .style("visibility", "hidden");
+						}
 
 				function path_sequence(d){
-					console.log('data');
-					console.log(d);
+
+					 var percentage = (100 * d.value / totalSize).toPrecision(3);
+					  var percentageString = percentage + "%";
+					  // console.log(percentage);
+					  if (percentage < 0.1) {
+					    percentageString = "< 0.1%";
+					  }
+
+					d3.select("#percentage")
+					      .text(percentageString);
+
+					d3.select("#explanation")
+					      .style("visibility", "");
+				 var sequenceArray = getAncestors(d);
+				 updateBreadcrumbs(sequenceArray);
+
+				  // Fade all the segments.
+				 d3.selectAll("path")
+				      .style("opacity", 0.3);
+
+				    // console.log(sequenceArray);
+				  // Then highlight only those that are an ancestor of the current segment.
+				 svg.selectAll("path")
+				     .filter(function(node) {
+				            return (sequenceArray.indexOf(node) >= 0);
+				            })
+				     .style("opacity", 1);				    
 				}
 
 				function click(d) {
@@ -266,10 +549,8 @@
 				    .selectAll("path")
 				      .attrTween("d", function(d) { return function() { return arc(d); }; });
 				}
+
 				function type(d) {
-					// console.log(d)
-					// console.log(d.x)
-				
 				  svg.transition()
 				      .duration(750)
 				      .tween("scale", function() {
@@ -281,285 +562,505 @@
 				    .selectAll("path")
 				      .attrTween("d", function(d) { return function() { return arc(d); }; });
 				}
+
+				function getAncestors(d) {
+				  var path = [];
+				  var current = d;
+
+				 var path_hash = {}
+
+				  while (current.parent) {
+				  	// console.log('dasda');
+				  	// console.log(current)
+				    path.unshift(current);
+				    current = current.parent;
+				  }
+				  path.unshift(current);
+				  return path;
+				}
+
 				d3.select(self.frameElement).style("height", height + "px");
 
 				return 0;
 				}
-    			}
+    		}
 		});
 
+		function drawLegend() {
+
+		  // Dimensions of legend item: width, height, spacing, radius of rounded rect.
+		  var li = {
+		    w: 75, h: 30, s: 3, r: 3
+		  };
+
+		  var legend = d3.select("#legend").append("svg:svg")
+		      .attr("width", li.w)
+		      .attr("height", d3.keys(colors).length * (li.h + li.s));
+
+		  var g = legend.selectAll("g")
+		      .data(d3.entries(colors))
+		      .enter().append("svg:g")
+		      .attr("transform", function(d, i) {
+		              return "translate(0," + i * (li.h + li.s) + ")";
+		           });
+
+		  g.append("svg:rect")
+		      .attr("rx", li.r)
+		      .attr("ry", li.r)
+		      .attr("width", li.w)
+		      .attr("height", li.h)
+		      .style("fill", function(d) { return d.value; });
+
+		  g.append("svg:text")
+		      .attr("x", li.w / 2)
+		      .attr("y", li.h / 2)
+		      .attr("dy", "0.35em")
+		      .attr("text-anchor", "middle")
+		      .text(function(d) { console.log(d); return d.key; });
+		}
+
+		function toggleLegend() {
+		  var legend = d3.select("#legend");
+		  if (legend.style("visibility") == "hidden") {
+		    legend.style("visibility", "");
+		  } else {
+		    legend.style("visibility", "hidden");
+		  }
+		}
 
 
+		function initializeBreadcrumbTrail() {
+		  // Add the svg area.
+		  var trail = d3.select("#sequence").append("svg:svg")
+		      .attr("width", width)
+		      .attr("height", 50)
+		      .attr("id", "trail");
+		  // Add the label at the end, for the percentage.
+		  trail.append("svg:text")
+		    .attr("id", "endlabel")
+		    .style("fill", "#000");
+		}
+
+
+		function breadcrumbPoints(d, i) {
+			// console.log(d);
+		  var points = [];
+		  points.push("0,0");
+		  points.push(b.w + 4*d.name.length+ ",0");
+		  points.push(b.w + b.t +4*d.name.length+ "," + (b.h / 2));
+		  points.push(b.w + 4*d.name.length + "," + b.h);
+		  points.push("0," + b.h);
+		  if (i > 0) { // Leftmost breadcrumb; don't include 6th vertex.
+		    points.push(b.t + "," + (b.h / 2));
+		  }
+		  return points.join(" ");
+		}
+
+		function updateBreadcrumbs(nodeArray) {
+
+	  // Data join; key function combines name and depth (= position in sequence).
+	  var g = d3.select("#trail")
+	      .selectAll("g")
+	      .data(nodeArray, function(d) { 
+	      	// console.log(d.name);
+	      	return d.name + d.depth; });
+
+	  // Add breadcrumb and label for entering nodes.
+	  var entering = g.enter().append("svg:g");
+	    
+	    var colors = [
+		 "#1f77b4",
+		   "#53a02c",
+		  "#de783b",
+		  "#6ab975",
+		  "#a173d1",
+		  "#bbbbbb"
+		];
+
+	  entering.append("svg:polygon")
+	      .attr("points", breadcrumbPoints)
+	      .style("fill", function(d) { return colors[d.depth]; });
+	  entering.append("svg:text")
+	      .attr("x", function (d){ return (b.w + b.t+4.2*d.name.length) / 2;})
+	      .attr("y", b.h / 2)
+	      .attr("dy", "0.35em")
+	      .attr("text-anchor", "middle")
+	      .text(function(d) { return d.name; });
+	  // Set position for entering and updating nodes.
+	  g.attr("transform", function(d, i) {
+	  	// console.log(last_d)
+	    var x = "translate(" + i * (b.w + b.s + 20 +(4.2*last_d )/2) + ", 0)";
+	    last_d = d.name.length;
+	    return x;
+	  });
+
+	  // Remove exiting nodes.
+	  g.exit().remove();
+	  // Make the breadcrumb trail visible, if it's hidden.
+	  d3.select("#trail")
+	      .style("visibility", "");
+
+}
 
 </script>
 <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script type="text/javascript">
 
-window.addEventListener('message', function(e) {
-    var opts = e.data.opts,
-        data = e.data.data;
+	$("#editor").on("keydown", function (e) {
 
-    return main(opts, data);
-});
 
-var defaults = {
-    margin: {top: 24, right: 0, bottom: 0, left: 0},
-    rootname: "TOP",
-    format: ",d",
-    title: "",
-    width: 490,
-    height: 500
-};
+	 if(e.keyCode == 32 || e.keyCode === 13 || e.keyCode==8){
+		//your code
+	    var content = $('#editor').val();
 
-function main(o, data) {
-  var root,
-      opts = $.extend(true, {}, defaults, o),
-      formatNumber = d3.format(opts.format),
-      rname = opts.rootname,
-      margin = opts.margin,
-      theight = 36 + 16;
+			$.ajax({
+			type: "GET",
+			data:  {'data' : content},
+			contentType:  "application/json; charset=utf-8",
+			url: '/dashboard/treemap',
+			dataType: 'json',
+			success: function(data){
 
-  $('#chart').width(opts.width).height(opts.height);
-  var width = opts.width - margin.left - margin.right,
-      height = opts.height - margin.top - margin.bottom - theight,
-      transitioning;
-  
-  var color = d3.scale.category20c();
-  
-  var x = d3.scale.linear()
-      .domain([0, width])
-      .range([0, width]);
-  
-  var y = d3.scale.linear()
-      .domain([0, height])
-      .range([0, height]);
-  
-  var treemap = d3.layout.treemap()
-      .children(function(d, depth) { return depth ? null : d._children; })
-      .sort(function(a, b) { return a.value - b.value; })
-      .ratio(height / width * 0.5 * (1 + Math.sqrt(5)))
-      .round(false);
-  
-  var svg = d3.select("#chart").append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.bottom + margin.top)
-      .style("margin-left", -margin.left + "px")
-      .style("margin.right", -margin.right + "px")
-    .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-      .style("shape-rendering", "crispEdges");
-  
-  var grandparent = svg.append("g")
-      .attr("class", "grandparent");
-  
-  grandparent.append("rect")
-      .attr("y", -margin.top)
-      .attr("width", width)
-      .attr("height", margin.top);
-  
-  grandparent.append("text")
-      .attr("x", 6)
-      .attr("y", 6 - margin.top)
-      .attr("dy", ".75em");
+				$('#chart').html("");
+				// console.log('##################');
 
-  if (opts.title) {
-    $("#chart").prepend("<p class='title'>" + opts.title + "</p>");
-  }
-  if (data instanceof Array) {
-    root = { key: rname, values: data };
-  } else {
-    root = data;
-  }
-    
-  initialize(root);
-  accumulate(root);
-  layout(root);
-  console.log(root);
-  display(root);
+				// console.log(data);
+				// console.log('##################');
+				 createmap(data);
+			}})
 
-  if (window.parent !== window) {
-    var myheight = document.documentElement.scrollHeight || document.body.scrollHeight;
-    window.parent.postMessage({height: myheight}, '*');
-  }
+	}});
 
-  function initialize(root) {
-    root.x = root.y = 0;
-    root.dx = width;
-    root.dy = height;
-    root.depth = 0;
-  }
+		function createmap (tm_data){
 
-  // Aggregate the values for internal nodes. This is normally done by the
-  // treemap layout, but not here because of our custom implementation.
-  // We also take a snapshot of the original children (_children) to avoid
-  // the children being overwritten when when layout is computed.
-  function accumulate(d) {
-    return (d._children = d.values)
-        ? d.value = d.values.reduce(function(p, v) { return p + accumulate(v); }, 0)
-        : d.value;
-  }
+			window.addEventListener('message', function(e) {
+			    var opts = e.data.opts,
+			        data = e.data.data;
 
-  // Compute the treemap layout recursively such that each group of siblings
-  // uses the same size (1×1) rather than the dimensions of the parent cell.
-  // This optimizes the layout for the current zoom state. Note that a wrapper
-  // object is created for the parent node for each group of siblings so that
-  // the parent’s dimensions are not discarded as we recurse. Since each group
-  // of sibling was laid out in 1×1, we must rescale to fit using absolute
-  // coordinates. This lets us use a viewport to zoom.
+			    return main(opts, data);
+			});
 
-  // KEY - ANSWER
-  // REGION - TAG
-  // SUB- REGION - QUESTION
+			var defaults = {
+			    margin: {top: 24, right: 0, bottom: 0, left: 0},
+			    rootname: "TOP",
+			    format: ",d",
+			    title: "",
+			    width: 600,
+			    height: 500
+			};
 
-  function layout(d) {
-    if (d._children) {
-      treemap.nodes({_children: d._children});
-      d._children.forEach(function(c) {
-        c.x = d.x + c.x * d.dx;
-        c.y = d.y + c.y * d.dy;
-        c.dx *= d.dx;
-        c.dy *= d.dy;
-        c.parent = d;
-        layout(c);
-      });
-    }
-  }
+			function main(o, data) {
+			  var root,
+			      opts = $.extend(true, {}, defaults, o),
+			      formatNumber = d3.format(opts.format),
+			      rname = opts.rootname,
+			      margin = opts.margin,
+			      theight = 36 + 16;
 
-  function display(d) {
-    grandparent
-        .datum(d.parent)
-        .on("click", transition)
-      .select("text")
-        .text(name(d));
+			  $('#chart').width(opts.width).height(opts.height);
+			  var width = opts.width - margin.left - margin.right,
+			      height = opts.height - margin.top - margin.bottom - theight,
+			      transitioning;
+			  
+			  // var color = d3.scale.category20();
 
-    var g1 = svg.insert("g", ".grandparent")
-        .datum(d)
-        .attr("class", "depth");
+			  var color = ["#f03b20", "#feb24c", "#ffeda0"]
 
-    var g = g1.selectAll("g")
-        .data(d._children)
-      .enter().append("g");
+			  var x = d3.scale.linear()
+			      .domain([0, width])
+			      .range([0, width]);
+			  
+			  var y = d3.scale.linear()
+			      .domain([0, height])
+			      .range([0, height]);
+			  
+			  var treemap = d3.layout.treemap()
+			      .children(function(d, depth) { return depth ? null : d._children; })
+			      .sort(function(a, b) { return a.value - b.value; })
+			      .ratio(height / width * 0.5 * (1 + Math.sqrt(5)))
+			      .round(false);
 
-    g.filter(function(d) { return d._children; })
-        .classed("children", true)
-        .on("click", transition);
+			  
+			  var svg = d3.select("#chart").append("svg")
+			      .attr("width", width + margin.left + margin.right)
+			      .attr("height", height + margin.bottom + margin.top)
+			      .style("margin-left", -margin.left + "px")
+			      .style("margin.right", -margin.right + "px")
+			    .append("g")
+			      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+			      .style("shape-rendering", "crispEdges");
+			  
+			  var grandparent = svg.append("g")
+			      .attr("class", "grandparent");
+			  
+			  grandparent.append("rect")
+			      .attr("y", -margin.top)
+			      .attr("width", width)
+			      .attr("height", margin.top);
+			  
+			  grandparent.append("text")
+			      .attr("x", 6)
+			      .attr("y", 6 - margin.top)
+			      .attr("dy", ".75em");
 
-    var children = g.selectAll(".child")
-        .data(function(d) { return d._children || [d]; })
-      .enter().append("g");
+			  if (opts.title) {
+			    $("#chart").prepend("<p class='title' style='color:white;'>" + opts.title + "</p>");
 
-    children.append("rect")
-        .attr("class", "child")
-        .call(rect)
-      .append("title")
-        .text(function(d) { return d.key + " (" + formatNumber(d.value) + ")"; });
-    children.append("text")
-        .attr("class", "ctext")
-        .text(function(d) { return d.key; })
-        .call(text2);
+			  }
+			  if (data instanceof Array) {
+			    root = { key: rname, values: data };
+			  } else {
+			    root = data;
+			  }
+			    
+			  initialize(root);
+			  accumulate(root);
+			  layout(root);
+			  // console.log(root);
+			  display(root);
 
-    g.append("rect")
-        .attr("class", "parent")
-        .call(rect);
+			  if (window.parent !== window) {
+			    var myheight = document.documentElement.scrollHeight || document.body.scrollHeight;
+			    window.parent.postMessage({height: myheight}, '*');
+			  }
 
-    var t = g.append("text")
-        .attr("class", "ptext")
-        .attr("dy", ".75em")
+			  function initialize(root) {
+			    root.x = root.y = 0;
+			    root.dx = width;
+			    root.dy = height;
+			    root.depth = 0;
+			  }
 
-    t.append("tspan")
-        .text(function(d) { return d.key; });
-    t.append("tspan")
-        .attr("dy", "1.0em")
-        .text(function(d) { return formatNumber(d.value); });
-    t.call(text);
+			  // Aggregate the values for internal nodes. This is normally done by the
+			  // treemap layout, but not here because of our custom implementation.
+			  // We also take a snapshot of the original children (_children) to avoid
+			  // the children being overwritten when when layout is computed.
+			  function accumulate(d) {
+			    return (d._children = d.values)
+			        ? d.value = d.values.reduce(function(p, v) { return p + accumulate(v); }, 0)
+			        : d.value;
+			  }
 
-    g.selectAll("rect")
-        .style("fill", function(d) { return color(d.key); });
+			  // Compute the treemap layout recursively such that each group of siblings
+			  // uses the same size (1×1) rather than the dimensions of the parent cell.
+			  // This optimizes the layout for the current zoom state. Note that a wrapper
+			  // object is created for the parent node for each group of siblings so that
+			  // the parent’s dimensions are not discarded as we recurse. Since each group
+			  // of sibling was laid out in 1×1, we must rescale to fit using absolute
+			  // coordinates. This lets us use a viewport to zoom.
 
-    function transition(d) {
-      if (transitioning || !d) return;
-      transitioning = true;
+			  // KEY - ANSWER
+			  // REGION - TAG
+			  // SUB- REGION - QUESTION
 
-      var g2 = display(d),
-          t1 = g1.transition().duration(750),
-          t2 = g2.transition().duration(750);
+			  function layout(d) {
+			    if (d._children) {
+			      treemap.nodes({_children: d._children});
+			      d._children.forEach(function(c) {
+			        c.x = d.x + c.x * d.dx;
+			        c.y = d.y + c.y * d.dy;
+			        c.dx *= d.dx;
+			        c.dy *= d.dy;
+			        c.parent = d;
+			        layout(c);
+			      });
+			    }
+			  }
 
-      // Update the domain only after entering new elements.
-      x.domain([d.x, d.x + d.dx]);
-      y.domain([d.y, d.y + d.dy]);
+			  function display(d) {
+			  	// console.log(d)
+			    
 
-      // Enable anti-aliasing during the transition.
-      svg.style("shape-rendering", null);
 
-      // Draw child nodes on top of parent nodes.
-      svg.selectAll(".depth").sort(function(a, b) { return a.depth - b.depth; });
+			    grandparent
+			        .datum(d.parent)
+			        .on("click", transition)
+			      .select("text")
+			        .text(name(d));
 
-      // Fade-in entering text.
-      g2.selectAll("text").style("fill-opacity", 0);
 
-      // Transition to the new view.
-      t1.selectAll(".ptext").call(text).style("fill-opacity", 0);
-      t1.selectAll(".ctext").call(text2).style("fill-opacity", 0);
-      t2.selectAll(".ptext").call(text).style("fill-opacity", 1);
-      t2.selectAll(".ctext").call(text2).style("fill-opacity", 1);
-      t1.selectAll("rect").call(rect);
-      t2.selectAll("rect").call(rect);
+			    var g1 = svg.insert("g", ".grandparent")
+			        .datum(d)
+			        .attr("class", "depth");
 
-      // Remove the old node when the transition is finished.
-      t1.remove().each("end", function() {
-        svg.style("shape-rendering", "crispEdges");
-        transitioning = false;
-      });
-    }
 
-    return g;
-  }
 
-  function text(text) {
-    text.selectAll("tspan")
-        .attr("x", function(d) { return x(d.x) + 6; })
-    text.attr("x", function(d) { return x(d.x) + 6; })
-        .attr("y", function(d) { return y(d.y) + 6; })
-        .style("opacity", function(d) { return this.getComputedTextLength() < x(d.x + d.dx) - x(d.x) ? 1 : 0; });
-  }
+			    var g = g1.selectAll("g")
+			        .data(d._children)
+			      .enter().append("g");
 
-  function text2(text) {
-    text.attr("x", function(d) { return x(d.x + d.dx) - this.getComputedTextLength() - 6; })
-        .attr("y", function(d) { return y(d.y + d.dy) - 6; })
-        .style("opacity", 1);
-  }
+			    g.filter(function(d) { return d._children; })
+			        .classed("children", true)
+			        .on("click", transition);
 
-  function rect(rect) {
-    rect.attr("x", function(d) { return x(d.x); })
-        .attr("y", function(d) { return y(d.y); })
-        .attr("width", function(d) { return x(d.x + d.dx) - x(d.x); })
-        .attr("height", function(d) { return y(d.y + d.dy) - y(d.y); });
-  }
+			    var children = g.selectAll(".child")
+			        .data(function(d) { return d._children || [d]; })
+			      .enter().append("g");
 
-  function name(d) {
-    return d.parent
-        ? name(d.parent) + " / " + d.key + " (" + formatNumber(d.value) + ")"
-        : d.key + " (" + formatNumber(d.value) + ")";
-  }
-}
+			    children.append("rect")
+			        .attr("class", "child")
+			        .call(rect)
+			      .append("title")
+			        .text(function(d) { return d.key + " (" + formatNumber(d.value) + ")"; });
+			    children.append("text")
+			        .attr("class", "ctext")
+			        .text(function(d) { return d.key; })
+			        .call(text2);
 
-if (window.location.hash === "") {
-    d3.json("/dashboard/tags.json", function(err, res) {
-        if (!err) {
-            console.log(res);
-            var data = d3.nest().key(function(d) { return d.tag; }).key(function(d) { return d.question; }).entries(res);
-            main({title: "Recommended Tags"}, {key: "Tags", values: data});
-            console.log(data[0])
-        }
-    });
-}
+			    g.append("rect")
+			        .attr("class", "parent")
+			        .call(rect);
+
+			    var t = g.append("text")
+			        .attr("class", "ptext")
+			        .attr("dy", ".75em")
+
+			    t.append("tspan")
+			        .text(function(d) { return d.key; });
+			    t.append("tspan")
+			        .attr("dy", "1.0em")
+			        .text(function(d) { return formatNumber(d.value); });
+			    t.call(text);
+
+			    g.selectAll("rect")
+			        .style("fill", function(d) {
+			        	if (d.value > 30)
+			        		return color[0];
+			        	else if (d.value >= 3)
+			        		return color[1];
+			        	else
+			        		return color[2];
+
+					});
+
+			        // 	// console.log(d)
+			        //  if (d.depth == 0) {
+			        //  	console.log('!!!!!!!!!!!!!!!!!!!')
+			        //  	// console.log(d.value);
+			        // 	return color(d.value);
+			        //  }
+			        // else if(d.depth == 1 && d._children){
+			        // 	var sum = 0
+			        // 	console.log('@@@@@@@@@@@@@@@@@@@@@@@@@')
+			        // 	// console.log(d.vote);
+			        // 	d._children.forEach(function (dchild){
+			        // 		console.log(dchild);
+			        // 		sum = sum + parseInt(dchild.vote);
+
+			        // 	});
+			        // 	return color(sum*10);
+			        // }  
+			        // else
+			        // {
+			        // 	console.log('##############')
+			        // 	console.log(d.value);
+			        // 	return color(parseInt(d.vote)*10)
+			        // }
+
+			    	
+
+			    function transition(d) {
+			      if (transitioning || !d) return;
+			      transitioning = true;
+
+			      var g2 = display(d),
+			          t1 = g1.transition().duration(750),
+			          t2 = g2.transition().duration(750);
+
+			      // Update the domain only after entering new elements.
+			      x.domain([d.x, d.x + d.dx]);
+			      y.domain([d.y, d.y + d.dy]);
+
+			      // Enable anti-aliasing during the transition.
+			      svg.style("shape-rendering", null);
+
+			      // Draw child nodes on top of parent nodes.
+			      svg.selectAll(".depth").sort(function(a, b) { return a.depth - b.depth; });
+
+			      // Fade-in entering text.
+			      g2.selectAll("text").style("fill-opacity", 0);
+
+			      // Transition to the new view.
+			      t1.selectAll(".ptext").call(text).style("fill-opacity", 0);
+			      t1.selectAll(".ctext").call(text2).style("fill-opacity", 0);
+			      t2.selectAll(".ptext").call(text).style("fill-opacity", 1);
+			      t2.selectAll(".ctext").call(text2).style("fill-opacity", 1);
+			      t1.selectAll("rect").call(rect);
+			      t2.selectAll("rect").call(rect);
+
+			      // Remove the old node when the transition is finished.
+			      t1.remove().each("end", function() {
+			        svg.style("shape-rendering", "crispEdges");
+			        transitioning = false;
+			      });
+			    }
+
+			    return g;
+			  }
+
+			  function text(text) {
+			    text.selectAll("tspan")
+			        .attr("x", function(d) { return x(d.x) + 6; })
+			    text.attr("x", function(d) { return x(d.x) + 6; })
+			        .attr("y", function(d) { return y(d.y) + 6; })
+			        .style("opacity", function(d) { return this.getComputedTextLength() < x(d.x + d.dx) - x(d.x) ? 1 : 0; });
+			  }
+
+			  function text2(text) {
+			    text.attr("x", function(d) { return x(d.x + d.dx) - this.getComputedTextLength() - 6; })
+			        .attr("y", function(d) { return y(d.y + d.dy) - 6; })
+			        .style("opacity", 1);
+			  }
+
+			  function rect(rect) {
+			    rect.attr("x", function(d) { return x(d.x); })
+			        .attr("y", function(d) { return y(d.y); })
+			        .attr("width", function(d) { return x(d.x + d.dx) - x(d.x); })
+			        .attr("height", function(d) { return y(d.y + d.dy) - y(d.y); });
+			  }
+
+			  function name(d) {
+			    return d.parent
+			        ? name(d.parent) + " / " + d.key + " (" + formatNumber(d.value) + ")"
+			        : d.key + " (" + formatNumber(d.value) + ")";
+			  }
+			}
+
+			res = tm_data
+		// if (window.location.hash === "") {
+    // d3.json("/dashboard/tags.json", function(err, res) {
+        // if (!err) {
+            // console.log(res);
+            var data = d3.nest().key(function(d) {
+            	
+             return d.tag; })
+            .key(function(d) {
+             return d.question; })
+            .entries(res);
+            // console.log("@@@@@@@@@@@@@@@@@@@@@2222");
+            // console.log(data);
+            // console.log("@@@@@@@@@@@@@@@@@@@@@2222");
+
+            main({title: "Recommended Tags"}, {key: "Tags", values: data.slice(0,50)});
+            // console.log(data[0])
+        // }
+    // })
+    // ;}	
+    // main({title: "Recommended Tags"}, {key: "Tags", values: tm_data});
+			           
+			
+		}
 
 </script>
 
 <% content_for :js_scripts do %>
 
-	
+	  
+    <script src="http://codemirror.net/lib/codemirror.js"></script>
+    <script src="http://codemirror.net/addon/edit/matchbrackets.js"></script>
+    <script src="http://codemirror.net/addon/edit/continuecomment.js"></script>
+    <script src="http://codemirror.net/mode/clike/clike.js"></script>
 	<%= javascript_include_tag 'dashboard', 'data-turbolinks-track' => true %>
 
 <% end %>
