@@ -19,17 +19,24 @@
     		</section>
     		<section class="content">
     			<div class="row">
-    				<div id="sunburst-slider" class="col-sm-4">
+    				<div id="sunburst-slider" class="col-sm-3">
 						<label class="label_name" id= "sunburst-slider-label-name" style="color:#feb24c">	No of elements   </label>
-						<label class="label_slider" id= "sunburst-slider-label"> </label> <br>
-							  <input type="range" id="slide-sunburst-slider" name="myRange" min="50" max="200" value="0">
+						<label class="label_slider" id= "sunburst-slider-label" style="color:white" > </label>
+							  <input type="range" id="slide-sunburst-slider" name="myRange" min="0" max="200" value="0">
 					</div>
-					<div id="sunburst-slider" class="col-sm-offset-4 col-sm-4">
-						<label class="label_name" id= "sunburst-slider-label-name" style="color:#feb24c">	No of Upvotes  </label>
-						<label class="label_slider" id= "sunburst-slider-label"> </label> <br>
-							  <input type="range" id="slide-sunburst-slider" name="myRange" min="50" max="200" value="0">
+					<div id="treemap-slider-votes" class="col-sm-offset-3 col-sm-3">
+						<label class="label_name" id= "treemap-slider-votes-label-name" style="color:#feb24c">	Upvotes  </label>
+						<label class="label_slider" id= "treemap-slider-votes-label" style="color:white"> </label>
+							  <input type="range" id="slide-treemap-slider-votes" name="myRange_vote" min="0" max="50" value="0">
+					</div>
+					<div id="treemap-slider" class="col-sm-3">
+						<label class="label_name" id= "treemap-slider-label-name" style="color:#feb24c">	User's Reputation  </label>
+						<label class="label_slider" id= "treemap-slider-label" style="color:white"> </label>
+							  <input type="range" id="slide-treemap-slider" name="myRange_rep" min="0" max="200" value="0">
 					</div>
     			</div>
+    			<br />
+    			<br />
     			<br />
     			<div class = "row">
     				<div id="sequence" >
@@ -143,49 +150,50 @@
 			"const" : "#1f77b4",
 			"native" : "#1f77b4",
 			"super" : "#1f77b4",
-			"while" : "#5687d",
-			"{" : "#6ab975",
-			"}" : "#6ab975",
-			"(" : "#6ab975",
-			")" : "#6ab975",
-			"[" : "#6ab975",
-			"]" : "#6ab975",
-			"·" : "#6ab975",
-			"++" : "#6ab975",
-			"--" : "#6ab975",
-			"++" : "#6ab975",
-			"--" : "#6ab975",
-			"+" : "#6ab975",
-			"-" : "#6ab975",
-			"!" : "#6ab975",
-			"~" : "#6ab975",
-			"* " : "#6ab975",
-			"/ " : "#6ab975",
-			"%" : "#6ab975",
-			"+" : "#6ab975",
-			"-" : "#6ab975",
-			"<<" : "#6ab975",
-			">>" : "#6ab975",
-			">>>" : "#6ab975",
-			"<" : "#6ab975",
-			"<=" : "#6ab975",
-			">" : "#6ab975",
-			">=" : "#6ab975",
-			"instanceof" : "#6ab975",
-			"==" : "#6ab975",
-			"!=" : "#6ab975",
-			"&" : "#6ab975",
-			"^" : "#6ab975",
-			"|" : "#6ab975",
-			"&&" : "#6ab975",
-			"||" : "#6ab975",
-			"? :" : "#6ab975",
-			"=" : "#6ab975",
-			"+=" : "#6ab975",
-			"-=" : "#6ab975",
-			"*=" : "#6ab975",
-			"/=" : "#6ab975",
-			"%=" : "#6ab975",
+			"while" : "#1f77b4",
+			"constructor" : "#1f77b4",
+			"{" : "#008080",
+			"}" : "#008080",
+			"(" : "#008080",
+			")" : "#008080",
+			"[" : "#008080",
+			"]" : "#008080",
+			"·" : "#008080",
+			"++" : "#008080",
+			"--" : "#008080",
+			"++" : "#008080",
+			"--" : "#008080",
+			"+" : "#008080",
+			"-" : "#008080",
+			"!" : "#008080",
+			"~" : "#008080",
+			"* " : "#008080",
+			"/ " : "#008080",
+			"%" : "#008080",
+			"+" : "#008080",
+			"-" : "#008080",
+			"<<" : "#008080",
+			">>" : "#008080",
+			">>>" : "#008080",
+			"<" : "#008080",
+			"<=" : "#008080",
+			">" : "#008080",
+			">=" : "#008080",
+			"instanceof" : "#008080",
+			"==" : "#008080",
+			"!=" : "#008080",
+			"&" : "#008080",
+			"^" : "#008080",
+			"|" : "#008080",
+			"&&" : "#008080",
+			"||" : "#008080",
+			"? :" : "#008080",
+			"=" : "#008080",
+			"+=" : "#008080",
+			"-=" : "#008080",
+			"*=" : "#008080",
+			"/=" : "#008080",
+			"%=" : "#008080",
 
 			"boolean" : "#53a02c",
 			"int" : "#53a02c",
@@ -243,7 +251,7 @@
 		 "Keyword" :"#1f77b4",
 		   "Data Type" :"#53a02c",
 		  "Function" :"#ff7f0e",
-		  "Operators" :"#6ab975",
+		  "Operators" :"#008080",
 		  "Constants" :"#dbdb8d",
 		  "Variables" :"#a173d1"
 		};
@@ -298,13 +306,13 @@
 					initializeBreadcrumbTrail();
 				var last_d = 0
 
-						d3.select("#slide-sunburst-slider").on("input", function() {
-						d3.selectAll("#sunburst-slider-label").text(this.value);
-						 var slider_val = parseFloat(this.value);
-						  // console.log(val_input);
+						// d3.select("#slide-sunburst-slider").on("input", function() {
+						// d3.selectAll("#sunburst-slider-label").text(this.value);
+						//  var slider_val = parseFloat(this.value);
+						//   // console.log(val_input);
 
-						  traverse(slider_val)
-						 });  
+						//   traverse(slider_val)
+						//  });  
 
 		
 				$("#editor").on("keydown", function (e) {
@@ -323,7 +331,7 @@
 				    var laststing = content.substring(lastIndex);
 					 
 					// console.log(laststing);
-
+				$('#legend').html("");
 					 drawLegend();
 					  d3.select("#togglelegend").on("click", toggleLegend);
 
@@ -335,6 +343,7 @@
 						dataType: 'json',
 						success: function(data){
 							new_data = {}
+							
 							// var count = 0
 							// data.forEach(function (d){
 							// 	if (count< 10)
@@ -450,6 +459,8 @@
 
 				      		if (d.name.includes('(') || d.name.includes(')')) 
 				      			return "#ff7f0e";
+				      		else if (d.name.includes('arg'))
+				      			return "#a173d1";
 				      		else if (d.name.includes('1')||d.name.includes('2')||d.name.includes('3')||d.name.includes('0')||d.name.includes('4')||d.name.includes('5')||d.name.includes('6')||d.name.includes('7')||d.name.includes('8')||d.name.includes('9'))
 				      			{	
 				      				// console.log(d.name)
@@ -457,7 +468,7 @@
 				      		// else if (d.parent != undefined && $.inArray((d.parent).name ,col_list) != -1 )
 				      		// 	return "#a173d1";
 				      		else if (d.name.includes('&lt') ||d.name.includes('&gt') || d.name.includes('&nbsp') || d.name.includes('&quot') || d.name.includes('&amp'))
-				      			return "#6ab975";
+				      			return "#008080";
 				      		else if (col[d.name]!= undefined){
 				      			// if(d.name == "while"){
 				      				// console.log("inside while");
@@ -466,7 +477,9 @@
 				      			return col[d.name]; 
 				      		}
 				      		else
+				      		{	
 				      			return "#a173d1";
+				      		}
 				      	})
 
 				       // .style("fill-opacity", 0.7)
@@ -599,6 +612,9 @@
 
 		  var g = legend.selectAll("g")
 		      .data(d3.entries(colors))
+
+
+
 		      .enter().append("svg:g")
 		      .attr("transform", function(d, i) {
 		              return "translate(0," + i * (li.h + li.s) + ")";
@@ -616,7 +632,7 @@
 		      .attr("y", li.h / 2)
 		      .attr("dy", "0.35em")
 		      .attr("text-anchor", "middle")
-		      .text(function(d) { console.log(d); return d.key; });
+		      .text(function(d) {  return d.key; });
 		}
 
 		function toggleLegend() {
@@ -672,14 +688,41 @@
 		 "#1f77b4",
 		   "#53a02c",
 		  "#de783b",
-		  "#6ab975",
+		  "#008080",
 		  "#a173d1",
 		  "#bbbbbb"
 		];
 
 	  entering.append("svg:polygon")
 	      .attr("points", breadcrumbPoints)
-	      .style("fill", function(d) { return colors[d.depth]; });
+	      .style("fill", function(d) {
+
+				      		if (d.name.includes('(') || d.name.includes(')')) 
+				      			return "#ff7f0e";
+				      		else if (d.name.includes('arg'))
+				      			return "#a173d1";
+				      		else if (d.name.includes('1')||d.name.includes('2')||d.name.includes('3')||d.name.includes('0')||d.name.includes('4')||d.name.includes('5')||d.name.includes('6')||d.name.includes('7')||d.name.includes('8')||d.name.includes('9'))
+				      			{	
+				      				// console.log(d.name)
+				      				return "#dbdb8d";}
+				      		// else if (d.parent != undefined && $.inArray((d.parent).name ,col_list) != -1 )
+				      		// 	return "#a173d1";
+				      		else if (d.name.includes('&lt') ||d.name.includes('&gt') || d.name.includes('&nbsp') || d.name.includes('&quot') || d.name.includes('&amp'))
+				      			return "#008080";
+				      		else if (col[d.name]!= undefined){
+				      			// if(d.name == "while"){
+				      				// console.log("inside while");
+				      				// console.log(col[d.name])};
+				      				// console.log("out while");
+				      			return col[d.name]; 
+				      		}
+				      		else
+				      		{	
+				      			return "#a173d1";
+				      		}
+				      	});
+
+	
 	  entering.append("svg:text")
 	      .attr("x", function (d){ return (b.w + b.t+4.2*d.name.length) / 2;})
 	      .attr("y", b.h / 2)
@@ -687,10 +730,19 @@
 	      .attr("text-anchor", "middle")
 	      .text(function(d) { return d.name; });
 	  // Set position for entering and updating nodes.
+	  last_d = 0;
 	  g.attr("transform", function(d, i) {
 	  	// console.log(last_d)
-	    var x = "translate(" + i * (b.w + b.s + 20 +(4.2*last_d )/2) + ", 0)";
-	    last_d = d.name.length;
+	    var x = "translate(" + last_d + ", 0)";
+		var val = parseInt(last_d) 
+	    // console.log(i)
+	    // console.log(x);
+	    // console.log((b.w + b.s + 20 +(4.2*last_d )/2) );
+
+	    // if (d.name.length>last_d)
+   	 	last_d = last_d + (b.w + b.t + (4*d.name.length))+ 10 
+
+   	 	
 	    return x;
 	  });
 
@@ -707,6 +759,11 @@
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script type="text/javascript">
 
+
+var global_slider_val_reputation =0
+var global_slider_val_votes = 0
+
+var treemap_new = 0
 	$("#editor").on("keydown", function (e) {
 
 
@@ -722,18 +779,45 @@
 			dataType: 'json',
 			success: function(data){
 
-				$('#chart').html("");
+				// $('#chart').html("");
+				treemap_new = data
 				// console.log('##################');
 
 				// console.log(data);
 				// console.log('##################');
-				 createmap(data);
+				 treemap_start(data,slider_val_reputation = 0,slider_val_votes = 0);
 			}})
 
 	}});
 
-		function createmap (tm_data){
 
+
+			d3.select("#slide-treemap-slider").on("input", function() {
+			d3.selectAll("#treemap-slider-label").text(this.value);
+			 var slider_val_reputation = parseFloat(this.value);
+
+			// d3.selectAll("#treemap-slider-label-votes").text(this.value);
+			//  var slider_val_votes = parseFloat(this.value);
+			  $('#chart').html("");
+			  // console.log(slider_val_reputation)
+			  	// console.log(global_slider_val_votes)
+			  treemap_start(treemap_new,slider_val_reputation,parseFloat($('input[name=myRange_vote]').val()))
+		 }); 
+
+		d3.select("#slide-treemap-slider-votes").on("input", function() {
+			// d3.selectAll("#treemap-slider-label").text(this.value);
+			//  var slider_val_reputation = parseFloat(this.value);
+			d3.selectAll("#treemap-slider-votes-label").text(this.value);
+			 var slider_val_votes = parseFloat(this.value);
+			  // console.log(val_input);
+			  $('#chart').html("");
+			  	// console.log(global_slider_val_reputation)
+			  	// console.log(slider_val_votes)
+			  treemap_start(treemap_new,parseFloat($('input[name=myRange_rep]').val()),slider_val_votes)
+		 });  
+		// function createmap (tm_data, spliced_val){
+
+			function main(o, data) {
 			window.addEventListener('message', function(e) {
 			    var opts = e.data.opts,
 			        data = e.data.data;
@@ -750,7 +834,6 @@
 			    height: 500
 			};
 
-			function main(o, data) {
 			  var root,
 			      opts = $.extend(true, {}, defaults, o),
 			      formatNumber = d3.format(opts.format),
@@ -765,7 +848,9 @@
 			  
 			  // var color = d3.scale.category20();
 
-			  var color = ["#f03b20", "#feb24c", "#ffeda0"]
+			  var color_tags = ["#b30000", "#e34a33", "#fc8d59","#fdcc8a","#fef0d9"]
+
+			  color_questions = ['#54278f','#756bb1','#9e9ac8','cbc9e2','#f2f0f7','#dd1c77']
 
 			  var x = d3.scale.linear()
 			      .domain([0, width])
@@ -777,7 +862,16 @@
 			  
 			  var treemap = d3.layout.treemap()
 			      .children(function(d, depth) { return depth ? null : d._children; })
-			      .sort(function(a, b) { return a.value - b.value; })
+			      .sort(function(a, b) { 
+			      	if(a._children != undefined && a._children[0]._children== undefined && b._children != undefined && b._children[0]._children== undefined)
+			      	{
+			      		var significance_a = ((a._children[0].reputation - 1)/(744455)) + ((a._children[0].vote - 5)/(1147))
+			      		var significance_b = ((b._children[0].reputation - 1)/(744455)) + ((b._children[0].vote - 5)/(1147))
+			      		return significance_a - significance_b;			   
+			      	}
+			      	else
+			      		return a.value - b.value;
+			      		 })
 			      .ratio(height / width * 0.5 * (1 + Math.sqrt(5)))
 			      .round(false);
 
@@ -888,15 +982,21 @@
 
 			    var g = g1.selectAll("g")
 			        .data(d._children)
-			      .enter().append("g");
 
-			    g.filter(function(d) { return d._children; })
+			        g.exit().remove()
+
+			      g.enter().append("g");
+
+			    g.filter(function(d) {  return d._children; })
 			        .classed("children", true)
 			        .on("click", transition);
 
 			    var children = g.selectAll(".child")
 			        .data(function(d) { return d._children || [d]; })
-			      .enter().append("g");
+
+			    children.exit().remove()
+
+			     children.enter().append("g");
 
 			    children.append("rect")
 			        .attr("class", "child")
@@ -925,12 +1025,53 @@
 
 			    g.selectAll("rect")
 			        .style("fill", function(d) {
-			        	if (d.value > 30)
-			        		return color[0];
-			        	else if (d.value >= 3)
-			        		return color[1];
+
+			        	// console.log(d)
+			        	
+			        	if(d._children == undefined)
+			        	{
+			        		if(d.key == "arrays")
+			        		{
+			        			console.log('aaaaaaaaa')
+				        		console.log(d.value);
+			        		}
+			        		return color_questions[5];
+			        	}
+			        	if(d._children != undefined && d._children[0]._children== undefined)
+			        	{
+						
+			        	
+			        		var significance = ((d._children[0].reputation - 1)/(744455)) + ((d._children[0].vote - 5)/(1147))
+			        		// console.log(significance)
+			        		if (significance>9)
+			        		{
+			        			console.log(d)
+			        		}
+			        	    if (significance> 0.8)
+				        		return color_questions[0];
+				        	else if (significance> 0.6)
+				        		return color_questions[1];
+				        	else if (significance> 0.4)
+				        		return color_questions[2];
+				        	else if (significance> 0.2)
+				        		return color_questions[3];
+					        else 
+				        		return color_questions[4];			        					        		
+			        	}
 			        	else
-			        		return color[2];
+			        	{
+
+				        	if (d.value > 40)
+				        		return color_tags[0];
+				        	else if (d.value >= 30)
+				        		return color_tags[1];
+				        	else if (d.value >= 20)
+				        		return color_tags[2];	
+				        	else if (d.value >= 10)
+				        		return color_tags[3];
+				        	else
+				        		return color_tags[4];
+			        	}
 
 					});
 
@@ -961,6 +1102,7 @@
 			    	
 
 			    function transition(d) {
+			    	console.log(d)
 			      if (transitioning || !d) return;
 			      transitioning = true;
 
@@ -1027,29 +1169,53 @@
 			  }
 			}
 
-			res = tm_data
+	// }
 		// if (window.location.hash === "") {
     // d3.json("/dashboard/tags.json", function(err, res) {
         // if (!err) {
             // console.log(res);
-            var data = d3.nest().key(function(d) {
-            	
-             return d.tag; })
-            .key(function(d) {
-             return d.question; })
-            .entries(res);
-            // console.log("@@@@@@@@@@@@@@@@@@@@@2222");
-            // console.log(data);
-            // console.log("@@@@@@@@@@@@@@@@@@@@@2222");
 
-            main({title: "Recommended Tags"}, {key: "Tags", values: data.slice(0,50)});
+
+			// res = tm_data
+   //          var data = d3.nest().key(function(d) {
+   //           return d.tag; })
+   //          .key(function(d) {
+   //           return d.question; })
+   //          .entries(res);
+   //          main({title: "Recommended Tags"}, {key: "Tags", values: data.slice(0,50)});
+
             // console.log(data[0])
         // }
     // })
     // ;}	
     // main({title: "Recommended Tags"}, {key: "Tags", values: tm_data});
 			           
-			
+		
+    // fix this
+		function treemap_start(tm_data, slider_val_reputation,slider_val_votes)
+		{
+			// console.log(spliced_val)
+			res = tm_data
+
+            var data = d3.nest().key(function(d) {
+
+            	if(d.reputation > slider_val_reputation && d.vote > slider_val_votes)
+           			  return d.tag; 
+           		})
+            .key(function(d) {
+             return d.question; })
+            .entries(res);
+
+            new_data = []
+            console.log(data)
+            data.forEach( function (d){
+            	if(d.key!="undefined" )
+             		{
+             			
+             			new_data.push(d);}
+             		 });
+
+            main({title: "Recommended Tags"}, {key: "Tags", values: new_data});
 		}
 
 </script>

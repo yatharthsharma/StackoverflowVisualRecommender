@@ -43,14 +43,14 @@ class DashboardController < ApplicationController
 	def treemap
 		@code_sim = Stackoverflow.collection.aggregate(
 			[{"$match" =>  {"$text" => {"$search"  =>  params['data']}}},
-			{"$project" => {"tags_array" => 1,"title" => 1,"type" => 1,"value" => 1,"vote"=>1,"code" => 1,"score" => {"$meta" => "textScore"},"_id" =>  0}},
+			{"$project" => {"tags_array" => 1,"title" => 1,"type" => 1,"value" => 1,"reputation"=>1, "vote"=>1,"code" => 1,"score" => {"$meta" => "textScore"},"_id" =>  0}},
 			{"$match" => {"score"  => {"$gt" =>  1 }}},
 			{"$sort" => {"score" => -1}},
-			{"$limit" => 50},
+			{"$limit" => 100},
 			{"$unwind" => "$tags_array"},
 			{"$group" => 
-			{"_id" => {"question" => "$title", "key" => "$code", "tags" =>  "$tags_array", "value"=>"$value"},"vote"=> { "$first" => "$vote"}}},
-			{"$project" => {"question"  => "$_id.question","key"  => "$_id.key","tag"  => "$_id.tags","value" => "$_id.value", "vote"=>"$vote"}},
+			{"_id" => {"question" => "$title", "key" => "$code", "tags" =>  "$tags_array", "value"=>"$value"},"vote"=> { "$first" => "$vote"},"reputation"=> { "$first" => "$reputation"}}},
+			{"$project" => {"question"  => "$_id.question","key"  => "$_id.key","tag"  => "$_id.tags","value" => "$_id.value", "vote"=>"$vote", "reputation" => "$reputation"}},
 			
 			],{:allow_disk_use => true}) 
 
