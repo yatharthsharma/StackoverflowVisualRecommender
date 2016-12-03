@@ -46,7 +46,7 @@ class DashboardController < ApplicationController
 			{"$project" => {"tags_array" => 1,"title" => 1,"type" => 1,"value" => 1,"reputation"=>1, "vote"=>1,"code" => 1,"score" => {"$meta" => "textScore"},"_id" =>  0}},
 			{"$match" => {"score"  => {"$gt" =>  1 }}},
 			{"$sort" => {"score" => -1}},
-			{"$limit" => 100},
+			{"$limit" => 50},
 			{"$unwind" => "$tags_array"},
 			{"$group" => 
 			{"_id" => {"question" => "$title", "key" => "$code", "tags" =>  "$tags_array", "value"=>"$value"},"vote"=> { "$first" => "$vote"},"reputation"=> { "$first" => "$reputation"}}},

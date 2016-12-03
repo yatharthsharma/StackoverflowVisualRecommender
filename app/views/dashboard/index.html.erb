@@ -20,7 +20,7 @@
     		<section class="content">
     			<div class="row">
     				<div id="sunburst-slider" class="col-sm-3">
-						
+							
 							  <input type="text" id="searchid" name="searchid" placeholder="Search in sunburst">
 							  <!-- <button  id ="search_btn" onclick="search_sunburst()"> Search</button> -->
 					</div>
@@ -47,6 +47,7 @@
 	    			<div class="col-sm-6">
 		    			<!-- <div class="box box-warning"> -->
 			    		 	<div id="sunburst" style="float:left">
+			    		 	<label class="label_name" id= "sunburst-error" style="color:#feb24c;visibility: hidden;">Oops! No Visualization to display for this combination! </label>
 			    		 		<div id="explanation" style="visibility: hidden;float:left">
 							      	<span id="percentage"></span>
 							      of the code comes in this sequence
@@ -57,6 +58,7 @@
 			            <!-- <div class="box box-warning">
 			            </div> -->
 			        <div class="col-sm-6">
+				            	<label class="label_name" id= "treemap-error" style="color:#feb24c;visibility: hidden;">Oops! No Visualization to display for this combination! </label>
 				            	<div id="chart"></div>
 			        </div>
 	    		</div>
@@ -64,7 +66,7 @@
 	    		<br />
 	    		<div class="row">
 		    		<div id="sidebar" class="col-sm-3">
-					      <input type="checkbox" id="togglelegend"> Legend<br/>
+					      <input type="checkbox" id="togglelegend" style="color:#feb24c;"> Legend<br/>
 					      <div id="legend" style="visibility: hidden;"></div>
 					</div>
 	    			<div class="col-sm-6">
@@ -77,6 +79,10 @@
 	    		 			</div>
 	    		 		</div>
 	    		 	</div>
+	    		 	<div id="sidebar-treemap" class="col-sm-3">
+					      <input type="checkbox" id="togglelegend-treemap" style="color:#feb24c;"> Relevance<br/>
+					      <div id="legend-treemap" style="visibility: hidden;"></div>
+					</div>
 	    		</div>
     		</section>
 		</div>
@@ -265,9 +271,9 @@ $("#searchid").on('input',function (){
 			"/=",
 			"%="]
 	    var colors = {
-		 "Keyword" :"#1f77b4",
-		   "Data Type" :"#53a02c",
-		  "Function" :"#ff7f0e",
+		 "Keywords" :"#1f77b4",
+		   "Data Types" :"#53a02c",
+		  "Functions" :"#ff7f0e",
 		  "Operators" :"#008080",
 		  "Constants" :"#dbdb8d",
 		  "Variables" :"#a173d1"
@@ -383,6 +389,21 @@ $("#searchid").on('input',function (){
 						dataType: 'json',
 						success: function(data){
 							new_data = {}
+
+							if(data == undefined)
+							{
+								// $('#sunburst-error').
+									  var legend = d3.select("#sunburst-error");
+									  if (legend.style("visibility") == "hidden") {
+									    legend.style("visibility", "");
+									  } 
+							}
+							else
+							{
+								var legend = d3.select("#sunburst-error");
+								legend.style("visibility", "hidden");
+									 
+							}
 							console.log(data)
 							// var count = 0
 							// data.forEach(function (d){
@@ -402,6 +423,7 @@ $("#searchid").on('input',function (){
 
 			function start(root,last_three_strings){			
 
+				console.log(last_three_strings)
  				if(root_copy !== undefined){
  					var flag_parent = 0;
  					var flag_child = 0;
@@ -818,6 +840,25 @@ var treemap_new = 0
 			dataType: 'json',
 			success: function(data){
 
+				if(data == undefined || data == "" || data == " " || data.length == 0)
+				{
+					// $('#sunburst-error').
+						  var legend = d3.select("#treemap-error");
+						  if (legend.style("visibility") == "hidden") {
+						    legend.style("visibility", "");
+						  } 
+						  var legend_2 = d3.select("#chart");
+						    legend_2.style("visibility", "hidden");
+				}
+				else
+				{
+					var legend = d3.select("#treemap-error");
+					legend.style("visibility", "hidden");
+							  var legend_2 = d3.select("#chart");
+						    legend_2.style("visibility", "");
+						 
+				}
+
 				$('#chart').html("");
 				treemap_new = data
 				// console.log('##################');
@@ -856,14 +897,12 @@ var treemap_new = 0
 		 });  
 		// function createmap (tm_data, spliced_val){
 
-			function main(o, data) {
 			window.addEventListener('message', function(e) {
 			    var opts = e.data.opts,
 			        data = e.data.data;
 
 			    return main(opts, data);
 			});
-
 			var defaults = {
 			    margin: {top: 24, right: 0, bottom: 0, left: 0},
 			    rootname: "TOP",
@@ -872,6 +911,100 @@ var treemap_new = 0
 			    width: 600,
 			    height: 500
 			};
+
+
+			  var color_tags = ["#b30000", "#e34a33", "#fc8d59","#fdcc8a","#fef0d9"]
+
+			  	 var color_tag_key = {
+					 "30+" :"#b30000",
+					   "20" :"#e34a33",
+					  "10" :"#fc8d59",
+					  "5" :"#fdcc8a",
+					  "0" :"#fef0d9"
+					};
+
+			  color_questions = ['#54278f','#756bb1','#9e9ac8','#cbc9e2','#f2f0f7','#ccffef']
+
+			  	    var color_questions_key = {
+					 "0.8-1" :"#54278f",
+					   "0.6-0.8" :"#756bb1",
+					  "0.4-0.6" :"#9e9ac8",
+					  "0.2-0.4" :"#cbc9e2",
+					  "00-0.2" :"#f2f0f7"
+					};
+
+				$('#legend-treemap').html("");
+					 drawLegend_treemap(depth = 0);
+					d3.select("#togglelegend-treemap").on("click", toggleLegend_treemap);
+					
+					function toggleLegend_treemap() {
+						  var legend = d3.select("#legend-treemap");
+						  if (legend.style("visibility") == "hidden") {
+						    legend.style("visibility", "");
+						  } else {
+						    legend.style("visibility", "hidden");
+						  }
+						}
+
+					function drawLegend_treemap(depth) {
+
+						$('#legend-treemap').html("");
+							// console.log(depth)
+							// console.log('@@@@@@@@@@@@@')
+						  // Dimensions of legend item: width, height, spacing, radius of rounded rect.
+						  var li = {
+						    w: 75, h: 30, s: 3, r: 3
+						  };
+
+						  if (depth == 1)
+						  {
+						  var legend = d3.select("#legend-treemap").append("svg:svg")
+						      .attr("width", li.w)
+						      .attr("height", d3.keys(color_questions_key).length * (li.h + li.s));
+
+						  var g = legend.selectAll("g")
+						      .data(d3.entries(color_questions_key))
+						      .enter().append("svg:g")
+						      .attr("transform", function(d, i) {
+						              return "translate(0," + i * (li.h + li.s) + ")";
+						           });
+						  	
+						  }
+						  else
+						  {
+
+							var legend = d3.select("#legend-treemap").append("svg:svg")
+							      .attr("width", li.w)
+							      .attr("height", d3.keys(color_questions_key).length * (li.h + li.s));
+
+							  var g = legend.selectAll("g")
+							      .data(d3.entries(color_tag_key))
+							      .enter().append("svg:g")
+							      .attr("transform", function(d, i) {
+							              return "translate(0," + i * (li.h + li.s) + ")";
+							           });
+						  }
+						  				  
+						  
+
+						  g.append("svg:rect")
+						      .attr("rx", li.r)
+						      .attr("ry", li.r)
+						      .attr("width", li.w)
+						      .attr("height", li.h)
+						      .style("fill", function(d) { return d.value; });
+
+						  g.append("svg:text")
+						      .attr("x", li.w / 2)
+						      .attr("y", li.h / 2)
+						      .attr("dy", "0.35em")
+						      .attr("text-anchor", "middle")
+						      .text(function(d) {  return d.key; });
+						}
+
+			function main(o, data) {
+
+
 
 			  var root,
 			      opts = $.extend(true, {}, defaults, o),
@@ -887,9 +1020,6 @@ var treemap_new = 0
 			  
 			  // var color = d3.scale.category20();
 
-			  var color_tags = ["#b30000", "#e34a33", "#fc8d59","#fdcc8a","#fef0d9"]
-
-			  color_questions = ['#54278f','#756bb1','#9e9ac8','cbc9e2','#f2f0f7','#dd1c77']
 
 			  var x = d3.scale.linear()
 			      .domain([0, width])
@@ -1003,15 +1133,24 @@ var treemap_new = 0
 
 			  function display(d) {
 			  	// console.log(d)
-			    
-
-
-			    grandparent
+			    	
+			    console.log('asa')
+			  	console.log(d.depth)
+			  	if(d.depth==0){
+				grandparent
 			        .datum(d.parent)
 			        .on("click", transition)
-			      .select("text")
-			        .text(name(d));
-
+			        .select("text")
+			        .text("Tags!");
+			  	}
+			  	else{
+			  	grandparent
+			        .datum(d.parent)
+			        .on("click", transition)
+			        .select("text")
+			        .text("Click here to go back!");	
+			  	}
+			    
 
 			    var g1 = svg.insert("g", ".grandparent")
 			        .datum(d)
@@ -1021,31 +1160,31 @@ var treemap_new = 0
 
 			    var g = g1.selectAll("g")
 			        .data(d._children)
+					.enter().append("g");
 
-			        g.exit().remove()
+			        // g.exit().remove()
 
-			      g.enter().append("g");
-
+			      
 			    g.filter(function(d) {  return d._children; })
 			        .classed("children", true)
 			        .on("click", transition);
 
 			    var children = g.selectAll(".child")
 			        .data(function(d) { return d._children || [d]; })
+					.enter().append("g");
+			    // children.exit().remove()
 
-			    children.exit().remove()
-
-			     children.enter().append("g");
+			     // children
 
 			    children.append("rect")
 			        .attr("class", "child")
 			        .call(rect)
-			      .append("title")
+			      // .append("title")
 			        .text(function(d) { return d.key + " (" + formatNumber(d.value) + ")"; });
-			    // children.append("text")
-			    //     .attr("class", "ctext")
-			    //     .text(function(d) { return d.key; })
-			    //     .call(text2);
+			    children.append("text")
+			        .attr("class", "ctext")
+			        .text(function(d) { return d.key; })
+			        .call(text2);
 
 			    g.append("rect")
 			        .attr("class", "parent")
@@ -1099,13 +1238,13 @@ var treemap_new = 0
 			        		{
 			        			console.log(d)
 			        		}
-			        	    if (significance> 0.8)
+			        	    if (significance> 1.2)
 				        		return color_questions[0];
-				        	else if (significance> 0.6)
+				        	else if (significance> 0.8)
 				        		return color_questions[1];
-				        	else if (significance> 0.4)
+				        	else if (significance> 0.6)
 				        		return color_questions[2];
-				        	else if (significance> 0.2)
+				        	else if (significance> 0.4)
 				        		return color_questions[3];
 					        else 
 				        		return color_questions[4];			        					        		
@@ -1113,13 +1252,13 @@ var treemap_new = 0
 			        	else
 			        	{
 
-				        	if (d.value > 40)
+				        	if (d.value > 30)
 				        		return color_tags[0];
-				        	else if (d.value >= 30)
-				        		return color_tags[1];
 				        	else if (d.value >= 20)
-				        		return color_tags[2];	
+				        		return color_tags[1];
 				        	else if (d.value >= 10)
+				        		return color_tags[2];	
+				        	else if (d.value >= 5)
 				        		return color_tags[3];
 				        	else
 				        		return color_tags[4];
@@ -1154,6 +1293,9 @@ var treemap_new = 0
 			    	
 
 			    function transition(d) {
+
+
+			    	drawLegend_treemap(d.depth)
 			    	console.log(d)
 			      if (transitioning || !d) return;
 			      transitioning = true;
@@ -1175,13 +1317,20 @@ var treemap_new = 0
 			      // Fade-in entering text.
 			      g2.selectAll("text").style("fill-opacity", 0);
 
-			      // Transition to the new view.
+			       // Transition to the new view.
 			      t1.selectAll(".ptext").call(text).style("fill-opacity", 0);
+			      t1.selectAll("foreignObject div").style("display", "none"); /*added*/
 			      t1.selectAll(".ctext").call(text2).style("fill-opacity", 0);
 			      t2.selectAll(".ptext").call(text).style("fill-opacity", 1);
 			      t2.selectAll(".ctext").call(text2).style("fill-opacity", 1);
 			      t1.selectAll("rect").call(rect);
 			      t2.selectAll("rect").call(rect);
+
+			       /* Foreign object */
+			      t1.selectAll(".textdiv").style("display", "none"); /* added */
+			      t1.selectAll(".foreignobj").call(foreign); /* added */
+			      t2.selectAll(".textdiv").style("display", "block"); /* added */
+			      t2.selectAll(".foreignobj").call(foreign); /* added */  
 
 			      // Remove the old node when the transition is finished.
 			      t1.remove().each("end", function() {
@@ -1220,7 +1369,8 @@ var treemap_new = 0
 			      .attr("width", function(d) { return x(d.x + d.dx) - x(d.x); })
 			      .attr("height", function(d) { return y(d.y + d.dy) - y(d.y); });
 			    }
-						  function name(d) {
+			
+			function name(d) {
 			    return d.parent
 			        ? name(d.parent) + " / " + d.key + " (" + formatNumber(d.value) + ")"
 			        : d.key + " (" + formatNumber(d.value) + ")";
@@ -1272,6 +1422,7 @@ var treemap_new = 0
              			
              			new_data.push(d);}
              		 });
+
 
             main({title: "Recommended Tags"}, {key: "Tags", values: new_data});
 		}
