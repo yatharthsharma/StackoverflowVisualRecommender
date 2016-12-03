@@ -70,7 +70,8 @@ class DashboardController < ApplicationController
 		tree = Hash.new
 	    data_arr = []
 
-	 
+	  value_limit = Integer(params['limit_val'])
+	    print '#################333',value_limit,value_limit.class
     @filtered_data = Finalngram.collection.aggregate(
 	    	[{"$match" =>{"word" => params['word1']}},
 
@@ -101,7 +102,6 @@ class DashboardController < ApplicationController
 
 			{ :allow_disk_use => true}
 			)
-
 
 
 
