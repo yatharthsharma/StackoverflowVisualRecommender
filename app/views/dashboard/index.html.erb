@@ -4,7 +4,7 @@
 <% end %>
 
 
-<body class="hold-transition skin-blue">
+<body class="hold-transition skin-blue" oncontextmenu="return false;">
 	<div class="wrapper">
 		<div >
 			<section class="content-header ">
@@ -111,7 +111,7 @@
 
 // };
 $("#searchid").on('input',function (){
-	console.log('sdfa')
+	//console.log('sdfa')
 	    svg.selectAll("path")[0].forEach(function (d) {
         d3.select(d).style("opacity", 1); //making all paths to opacity 1
         if (d3.select(d).data()[0].name.includes(document.getElementById("searchid").value.replace(" ",""))) {
@@ -542,7 +542,24 @@ $("#searchid").on('input',function (){
 			      	.attr("stroke-width",0.6)
 			      	.on("click", click)
 			     	.on("mouseover",path_sequence)
-			   		.append("title")
+			     	.on('contextmenu', 	function (d,i){
+						
+						var append_date = ""
+							while (d.parent)
+							{
+
+								append_date = d.name + " " + append_date
+								d = d.parent
+							}
+
+							append_date = d.name + " " + append_date 
+
+
+						$('#editor').val($('#editor').val() + " " + append_date)
+
+
+					})
+			   	.append("title")
 			      	.text(function(d) { return d.name + "\n" + formatNumber(d.value); });
 			      
 			     //   var text = sunburst.append("text")
@@ -609,7 +626,7 @@ $("#searchid").on('input',function (){
 				function click(d) {
 					console.log(d)
 					// console.log(d.x)
-					$('#editor').val($('#editor').val() + " " +d.name)
+	//					$('#editor').val($('#editor').val() + " " +d.name)
 				  svg.transition()
 				      .duration(750)
 				      .tween("scale", function() {
@@ -768,6 +785,7 @@ $("#searchid").on('input',function (){
 						      		else if (d.name.includes('&lt') ||d.name.includes('&gt') || d.name.includes('&nbsp') || d.name.includes('&quot') || d.name.includes('&amp'))
 						      			return "#008080";
 						      		else if (col[d.name]!= undefined){
+
 						      			// if(d.name == "while"){
 						      				// console.log("inside while");
 						      				// console.log(col[d.name])};
@@ -858,6 +876,8 @@ var treemap_new = 0
 						    legend_2.style("visibility", "");
 						 
 				}
+				
+				//console.log(data)
 
 				$('#chart').html("");
 				treemap_new = data
@@ -1034,8 +1054,8 @@ var treemap_new = 0
 			      .sort(function(a, b) { 
 			      	if(a._children != undefined && a._children[0]._children== undefined && b._children != undefined && b._children[0]._children== undefined)
 			      	{
-			      		var significance_a = ((a._children[0].reputation - 1)/(744455)) + ((a._children[0].vote - 5)/(1147))
-			      		var significance_b = ((b._children[0].reputation - 1)/(744455)) + ((b._children[0].vote - 5)/(1147))
+			      		var significance_a = ((a._children[0].reputation - 1)/(2000)) + ((a._children[0].vote - 5)/(147))
+			      		var significance_b = ((b._children[0].reputation - 1)/(2000)) + ((b._children[0].vote - 5)/(147))
 			      		return significance_a - significance_b;			   
 			      	}
 			      	else
@@ -1134,8 +1154,8 @@ var treemap_new = 0
 			  function display(d) {
 			  	// console.log(d)
 			    	
-			    console.log('asa')
-			  	console.log(d.depth)
+			    //console.log('asa')
+			  	//console.log(d.depth)
 			  	if(d.depth==0){
 				grandparent
 			        .datum(d.parent)
@@ -1223,8 +1243,8 @@ var treemap_new = 0
 			        	{
 			        		if(d.key == "arrays")
 			        		{
-			        			console.log('aaaaaaaaa')
-				        		console.log(d.value);
+			        			//console.log('aaaaaaaaa')
+				        		//console.log(d.value);
 			        		}
 			        		return color_questions[5];
 			        	}
@@ -1232,19 +1252,19 @@ var treemap_new = 0
 			        	{
 						
 			        	
-			        		var significance = ((d._children[0].reputation - 1)/(744455)) + ((d._children[0].vote - 5)/(1147))
+			        		var significance = ((d._children[0].reputation - 1)/(2000)) + ((d._children[0].vote - 5)/(147))
 			        		// console.log(significance)
 			        		if (significance>9)
 			        		{
-			        			console.log(d)
+			        			//console.log(d)
 			        		}
-			        	    if (significance> 1.2)
-				        		return color_questions[0];
-				        	else if (significance> 0.8)
+			        	    if (significance> 0.8)
 				        		return color_questions[1];
 				        	else if (significance> 0.6)
-				        		return color_questions[2];
+				        		return color_questions[1];
 				        	else if (significance> 0.4)
+				        		return color_questions[2];
+				        	else if (significance> 0.2)
 				        		return color_questions[3];
 					        else 
 				        		return color_questions[4];			        					        		
@@ -1277,7 +1297,7 @@ var treemap_new = 0
 			        // 	console.log('@@@@@@@@@@@@@@@@@@@@@@@@@')
 			        // 	// console.log(d.vote);
 			        // 	d._children.forEach(function (dchild){
-			        // 		console.log(dchild);
+			        // 		//console.log(dchild);
 			        // 		sum = sum + parseInt(dchild.vote);
 
 			        // 	});
@@ -1296,7 +1316,7 @@ var treemap_new = 0
 
 
 			    	drawLegend_treemap(d.depth)
-			    	console.log(d)
+			    	//console.log(d)
 			      if (transitioning || !d) return;
 			      transitioning = true;
 
@@ -1415,7 +1435,7 @@ var treemap_new = 0
             .entries(res);
 
             new_data = []
-            console.log(data)
+            //console.log(data)
             data.forEach( function (d){
             	if(d.key!="undefined" )
              		{
